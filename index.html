@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Kas Hiling</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kas Hiling Pro</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>💸 Kas Hiling</h1>
+<div class="container">
 
-<input id="pengeluaran" type="number" placeholder="Total Biaya">
-<button onclick="setBiaya()">Simpan Biaya</button>
+    <h1>💸 Kas Hiling Pro</h1>
 
-<div>
-    Total Biaya: <span id="totalBiaya">0</span><br>
-    Jumlah Peserta: <span id="jumlahPeserta">0</span><br>
-    Biaya / Orang: <span id="perOrang">0</span>
-</div>
+    <div class="role-box">
+        <button onclick="loginMember()">Member</button>
+        <button onclick="loginAdmin()">Admin</button>
+        <span id="roleText">Mode: Guest</span>
+    </div>
 
-<input id="nama" placeholder="Nama">
-<input id="bayar" type="number" placeholder="Bayar">
-<button onclick="tambahPeserta()">Tambah</button>
+    <div class="admin-only">
+        <input id="pengeluaran" type="number" placeholder="Total Biaya">
+        <button onclick="setBiaya()">Simpan Biaya</button>
+    </div>
 
-<table>
-    <tbody id="pesertaBody"></tbody>
-</table>
+    <div class="card">
+        Total Biaya: Rp <span id="totalBiaya">0</span><br>
+        Jumlah Peserta: <span id="jumlahPeserta">0</span><br>
+        Biaya / Orang: Rp <span id="perOrang">0</span>
+    </div>
 
-<div>
-    Terkumpul: <span id="terkumpul">0</span><br>
-    Sisa: <span id="sisa">0</span>
+    <div class="admin-only">
+        <input id="nama" placeholder="Nama Peserta">
+        <input id="bayar" type="number" placeholder="Bayar">
+        <button onclick="tambahPeserta()">Tambah</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Bayar</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="pesertaBody"></tbody>
+    </table>
+
+    <div class="card">
+        Terkumpul: Rp <span id="terkumpul">0</span><br>
+        Sisa: Rp <span id="sisa">0</span>
+    </div>
+
 </div>
 
 <script type="module" src="./index.js"></script>
