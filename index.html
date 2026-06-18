@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kas Hiling</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f3f4f6;
+    padding:20px;
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+}
+input,button{
+    padding:10px;
+    margin:5px;
+}
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+th,td{
+    border:1px solid #ddd;
+    padding:8px;
+}
+th{
+    background:#2563eb;
+    color:white;
+}
+.card{
+    background:#f8fafc;
+    padding:15px;
+    margin-top:15px;
+    border-radius:8px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>💸 Kas Hiling</h1>
+
+<h3>Total Pengeluaran</h3>
+<input type="number" id="pengeluaran" placeholder="Contoh 1500000">
+
+<button onclick="setBiaya()">Hitung</button>
+
+<div class="card">
+    Total Biaya: Rp <span id="totalBiaya">0</span><br>
+    Jumlah Peserta: <span id="jumlahPeserta">0</span><br>
+    Biaya Per Orang: Rp <span id="perOrang">0</span>
+</div>
+
+<hr>
+
+<h3>Tambah Peserta</h3>
+
+<input type="text" id="nama" placeholder="Nama Peserta">
+<input type="number" id="bayar" placeholder="Uang Dibayar">
+<button onclick="tambahPeserta()">Tambah</button>
+
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>Nama</th>
+<th>Bayar</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody id="pesertaBody"></tbody>
+</table>
+
+<div class="card">
+    Total Terkumpul: Rp <span id="terkumpul">0</span><br>
+    Kekurangan / Sisa: Rp <span id="sisa">0</span>
+</div>
+
+</div>
+
+<script>
+let peserta = [];
+let totalBiaya = 0;
+
+function setBiaya(){
+    totalBiaya =
+        Number(document.getElementById('pengeluaran').value);
+
+    update();
+}
+
+function tambahPeserta(){
+
+    const nama =
+        document.getElementById('nama').value;
+
+    const bayar =
+        Number(document.getElementById('bayar').value);
+
+    peserta.push({
+        nama:nama,
+        bayar:bayar
+    });
+
+    document.getElementById('nama').value="";
+    document.getElementById('bayar').value="";
+
+    update();
+}
+
+function update(){
+
+    let body = "";
+
+    let perOrang =
+    peserta.length > 0
+    ? Math.ceil(totalBiaya / peserta.length)
+    : 0;
+
+    let terkumpul = 0;
+
+    peserta.forEach((p,index)=>{
+
+        terkumpul += p.bayar;
+
+        let status =
+        p.bayar >= perOrang
+        ? "✅ Lunas"
+        : "❌ Kurang";
+
+        body += `
+        <tr>
+        <td>${index+1}</td>
+        <td>${p.nama}</td>
+        <td>Rp ${p.bayar.toLocaleString('id-ID')}</td>
+        <td>${status}</td>
+        </tr>
+        `;
+    });
+
+    document.getElementById('pesertaBody').innerHTML = body;
+
+    document.getElementById('jumlahPeserta').innerText =
+        peserta.length;
+
+    document.getElementById('perOrang').innerText =
+        perOrang.toLocaleString('id-ID');
+
+    document.getElementById('totalBiaya').innerText =
+        totalBiaya.toLocaleString('id-ID');
+
+    document.getElementById('terkumpul').innerText =
+        terkumpul.toLocaleString('id-ID');
+
+    document.getElementById('sisa').innerText =
+        (totalBiaya - terkumpul).toLocaleString('id-ID');
+}
+</script>
+
+</body>
+</html>
