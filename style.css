@@ -1,43 +1,83 @@
 body{
-    font-family:Arial;
-    background:#f4f4f4;
-    padding:20px;
+ margin:0;
+ font-family:Arial;
+ background:#f3f4f6;
 }
-.container{
-    max-width:1000px;
-    margin:auto;
-    background:white;
-    padding:20px;
-    border-radius:15px;
+
+.hidden{
+ display:none;
 }
+
+.login-page{
+ position:fixed;
+ inset:0;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+.login-box{
+ width:380px;
+ background:white;
+ padding:30px;
+ border-radius:16px;
+}
+
 input,button{
-    padding:10px;
-    margin:5px;
+ width:100%;
+ padding:12px;
+ margin-top:10px;
+ box-sizing:border-box;
 }
+
 button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:8px;
+ background:#2563eb;
+ color:white;
+ border:none;
+ cursor:pointer;
 }
-table{
-    width:100%;
-    margin-top:20px;
-    border-collapse:collapse;
+
+.secondary{
+ background:#64748b;
 }
-th,td{
-    border:1px solid #ddd;
-    padding:10px;
+
+.container{
+ max-width:1000px;
+ margin:20px auto;
+ background:white;
+ padding:20px;
+ border-radius:16px;
 }
+
+.topbar{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+
 .card{
-    margin-top:15px;
-    padding:15px;
-    background:#f9fafb;
-    border-radius:10px;
+ background:#f9fafb;
+ padding:15px;
+ margin-top:15px;
+ border-radius:10px;
 }
+
+table{
+ width:100%;
+ margin-top:20px;
+ border-collapse:collapse;
+}
+
+th,td{
+ border:1px solid #ddd;
+ padding:10px;
+}
+
 .admin-only{
-    display:none;
+ display:none;
 }
+
 .delete{
-    background:red;
+ background:red;
 }
