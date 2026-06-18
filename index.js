@@ -1,2 +1,154 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-...
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    collection,
+    addDoc,
+    onSnapshot,
+    deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyA2BL9QZwuQmNOB5tyO2PN8ok-9ao8m3Io",
+    authDomain: "test-mode-fb88e.firebaseapp.com",
+    projectId: "test-mode-fb88e",
+    storageBucket: "test-mode-fb88e.firebasestorage.app",
+    messagingSenderId: "765554892957",
+    appId: "1:765554892957:web:d78d1f8729742d0746b474"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let peserta = [];
+let totalBiaya = 0;
+let role = "guest";
+const ADMIN_PASSWORD = "admin123";
+
+function format(num){
+    return num.toLocaleString("id-ID");
+}
+
+function applyRole(){
+    document.querySelectorAll(".admin-only").forEach(el=>{
+        el.style.display = role === "admin" ? "block" : "none";
+    });
+
+    document.getElementById("roleText").innerText =
+        "Mode: " + role;
+}
+
+window.loginMember = function(){
+    role = "member";
+    applyRole();
+};
+
+window.loginAdmin = function(){
+    const pass = prompt("Password admin:");
+    if(pass === ADMIN_PASSWORD){
+        role = "admin";
+        applyRole();
+    }else{
+        alert("Password salah");
+    }
+};
+
+window.setBiaya = async function(){
+    if(role !== "admin") return;
+
+    totalBiaya = Number(
+        document.getElementById("pengeluaran").value
+    );
+
+    await setDoc(doc(db,"settings","biaya"),{
+        totalBiaya
+    });
+
+    update();
+};
+
+window.tambahPeserta = async function(){
+    if(role !== "admin") return;
+
+    const nama = document.getElementById("nama").value.trim();
+    const bayar = Number(document.getElementById("bayar").value);
+
+    if(!nama || bayar <= 0) return;
+
+    await addDoc(collection(db,"peserta"),{
+        nama,
+        bayar
+    });
+
+    document.getElementById("nama").value = "";
+    document.getElementById("bayar").value = "";
+};
+
+window.hapus = async function(id){
+    if(role !== "admin") return;
+    await deleteDoc(doc(db,"peserta",id));
+};
+
+function update(){
+    let body="";
+    let perOrang = peserta.length
+        ? Math.ceil(totalBiaya/peserta.length)
+        : 0;
+
+    let terkumpul=0;
+
+    peserta.forEach((p,index)=>{
+        terkumpul += p.bayar;
+
+        const status =
+            p.bayar >= perOrang
+            ? "✅ Lunas"
+            : `❌ Kurang Rp ${format(perOrang-p.bayar)}`;
+
+        body += `
+        <tr>
+            <td>${index+1}</td>
+            <td>${p.nama}</td>
+            <td>Rp ${format(p.bayar)}</td>
+            <td>${status}</td>
+            <td>
+                ${
+                    role==="admin"
+                    ? `<button class="delete" onclick="hapus('${p.id}')">Hapus</button>`
+                    : "-"
+                }
+            </td>
+        </tr>`;
+    });
+
+    document.getElementById("pesertaBody").innerHTML = body;
+    document.getElementById("jumlahPeserta").innerText = peserta.length;
+    document.getElementById("perOrang").innerText = format(perOrang);
+    document.getElementById("totalBiaya").innerText = format(totalBiaya);
+    document.getElementById("terkumpul").innerText = format(terkumpul);
+    document.getElementById("sisa").innerText = format(totalBiaya-terkumpul);
+}
+
+async function loadBiaya(){
+    const snap = await getDoc(doc(db,"settings","biaya"));
+    if(snap.exists()){
+        totalBiaya = snap.data().totalBiaya;
+        update();
+    }
+}
+
+onSnapshot(collection(db,"peserta"), snapshot=>{
+    peserta = [];
+    snapshot.forEach(docSnap=>{
+        peserta.push({
+            id: docSnap.id,
+            ...docSnap.data()
+        });
+    });
+    update();
+});
+
+loadBiaya();
+applyRole();
