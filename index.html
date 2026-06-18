@@ -2,57 +2,66 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kas Hiling Pro</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-
+<div id="loginPage" class="login-page">
+  <div class="login-box">
     <h1>💸 Kas Hiling Pro</h1>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <button onclick="guestLogin()" class="secondary">Masuk sebagai Guest</button>
+    <p id="error"></p>
+  </div>
+</div>
 
-    <div class="role-box">
-        <button onclick="loginMember()">Member</button>
-        <button onclick="loginAdmin()">Admin</button>
-        <span id="roleText">Mode: Guest</span>
+<div class="container hidden" id="app">
+  <div class="topbar">
+    <h1>Kas Hiling</h1>
+    <div>
+      <span id="roleText">Guest</span>
+      <button onclick="logout()">Logout</button>
     </div>
+  </div>
 
-    <div class="admin-only">
-        <input id="pengeluaran" type="number" placeholder="Total Biaya">
-        <button onclick="setBiaya()">Simpan Biaya</button>
-    </div>
+  <div class="admin-only">
+    <input id="pengeluaran" type="number" placeholder="Total Biaya">
+    <button onclick="setBiaya()">Simpan Biaya</button>
+  </div>
 
-    <div class="card">
-        Total Biaya: Rp <span id="totalBiaya">0</span><br>
-        Jumlah Peserta: <span id="jumlahPeserta">0</span><br>
-        Biaya / Orang: Rp <span id="perOrang">0</span>
-    </div>
+  <div class="card">
+    Total Biaya: Rp <span id="totalBiaya">0</span><br>
+    Jumlah Peserta: <span id="jumlahPeserta">0</span><br>
+    Biaya / Orang: Rp <span id="perOrang">0</span>
+  </div>
 
-    <div class="admin-only">
-        <input id="nama" placeholder="Nama Peserta">
-        <input id="bayar" type="number" placeholder="Bayar">
-        <button onclick="tambahPeserta()">Tambah</button>
-    </div>
+  <div class="admin-only">
+    <input id="nama" placeholder="Nama Peserta">
+    <input id="bayar" type="number" placeholder="Bayar">
+    <button onclick="tambahPeserta()">Tambah</button>
+  </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Bayar</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody id="pesertaBody"></tbody>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Bayar</th>
+        <th>Status</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody id="pesertaBody"></tbody>
+  </table>
 
-    <div class="card">
-        Terkumpul: Rp <span id="terkumpul">0</span><br>
-        Sisa: Rp <span id="sisa">0</span>
-    </div>
-
+  <div class="card">
+    Terkumpul: Rp <span id="terkumpul">0</span><br>
+    Sisa: Rp <span id="sisa">0</span>
+  </div>
 </div>
 
 <script type="module" src="./index.js"></script>
