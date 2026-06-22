@@ -59,6 +59,12 @@ if (isFirebaseInitialized && dataRef) {
       localStorage.setItem("kas_hiling_biaya_total", biayaTotal);
       localStorage.setItem("kas_hiling_daftar_peserta", JSON.stringify(daftarPeserta));
       update();
+    } else {
+      // Jika database Firebase masih kosong, namun local storage memiliki data, upload data lokal ke Firebase
+      if (biayaTotal > 0 || daftarPeserta.length > 0) {
+        console.log("Firebase kosong. Mengunggah data lokal ke Firebase...");
+        saveData();
+      }
     }
   });
 }
