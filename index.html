@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kas Hiling Pro</title>
+  <link rel="icon" type="image/png" href="logo.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +12,10 @@
 <!-- Halaman Login -->
 <div id="loginPage" class="login-page hidden">
   <div class="login-box glass-panel">
-    <h1>💸 Kas Hiling Pro</h1>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 25px;">
+      <img src="logo.png" alt="Logo Kas Hiling Pro" style="width: 80px; height: 80px; border-radius: 20px; object-fit: cover; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4); border: 2px solid rgba(255, 255, 255, 0.1);">
+      <h1 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 0; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Kas Hiling Pro</h1>
+    </div>
     <input id="username" placeholder="Username (admin / member)" autofocus>
     <input id="password" type="password" placeholder="Password">
     <button onclick="login()">Login</button>
@@ -24,7 +28,10 @@
 <div class="container glass-panel hidden" id="app">
   <!-- Topbar Navigation -->
   <div class="topbar">
-    <h1>Kas Hiling Pro</h1>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <img src="logo.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1);">
+      <h1 style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.025em; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0;">Kas Hiling Pro</h1>
+    </div>
     <div>
       <span id="roleText">Guest</span>
       <button onclick="logout()" class="secondary">Logout</button>
